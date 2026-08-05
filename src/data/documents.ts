@@ -17,6 +17,8 @@ export type ReadRoomDocument = {
   contents?: DocumentContentsItem[];
 };
 
+const publicAsset = (path: string) => `${import.meta.env.BASE_URL}${path}`;
+
 export const documents: ReadRoomDocument[] = [
   {
     id: "digital-trust",
@@ -27,7 +29,7 @@ export const documents: ReadRoomDocument[] = [
     category: "Institutions",
     description:
       "How public systems earn confidence through clearer choices, visible responsibility and humane digital services.",
-    file: "/pdfs/digital-trust.pdf",
+    file: publicAsset("pdfs/digital-trust.pdf"),
     accent: "#2949b8",
     contents: [
       { title: "Overview", page: 1 },
@@ -45,7 +47,7 @@ export const documents: ReadRoomDocument[] = [
     category: "Data & society",
     description:
       "A field guide to what public datasets reveal, what they leave out and how institutions can use them responsibly.",
-    file: "/pdfs/civic-data.pdf",
+    file: publicAsset("pdfs/civic-data.pdf"),
     accent: "#b64a36",
     contents: [
       { title: "Overview", page: 1 },
@@ -63,7 +65,7 @@ export const documents: ReadRoomDocument[] = [
     category: "Climate",
     description:
       "The institutions, infrastructure and household decisions behind a durable move to cleaner energy.",
-    file: "/pdfs/energy-transition.pdf",
+    file: publicAsset("pdfs/energy-transition.pdf"),
     accent: "#16705e",
     contents: [
       { title: "Overview", page: 1 },
@@ -81,7 +83,7 @@ export const documents: ReadRoomDocument[] = [
     category: "Cities",
     description:
       "Why time, transport and proximity belong at the centre of the housing conversation.",
-    file: "/pdfs/modern-city.pdf",
+    file: publicAsset("pdfs/modern-city.pdf"),
     accent: "#6f4687",
     contents: [
       { title: "Overview", page: 1 },
@@ -99,7 +101,7 @@ export const documents: ReadRoomDocument[] = [
     category: "Social policy",
     description:
       "An account of care as public infrastructure and the work that happens between formal systems.",
-    file: "/pdfs/networks-of-care.pdf",
+    file: publicAsset("pdfs/networks-of-care.pdf"),
     accent: "#d38b0b",
     contents: [
       { title: "Overview", page: 1 },

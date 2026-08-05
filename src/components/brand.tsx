@@ -13,7 +13,7 @@ export function Brand({ compact = false, inverse = false }: BrandProps) {
       aria-label="Read Room home"
     >
       <img
-        src="/assets/icons/file.png"
+        src={`${import.meta.env.BASE_URL}assets/icons/file.png`}
         alt=""
         className={`read-room-logo ${compact ? "size-10" : "size-12"}`}
         aria-hidden="true"

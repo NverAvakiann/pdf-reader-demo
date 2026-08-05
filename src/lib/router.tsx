@@ -16,11 +16,27 @@ type RouterContextValue = {
 
 const RouterContext = createContext<RouterContextValue | null>(null);
 
+const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
+
+function getAppPath() {
+  const { pathname } = window.location;
+
+  if (!basePath) return pathname;
+  if (pathname === basePath) return "/";
+  if (pathname.startsWith(`${basePath}/`)) return pathname.slice(basePath.length);
+
+  return pathname;
+}
+
+function getBrowserPath(path: string) {
+  return `${basePath}${path}`;
+}
+
 export function RouterProvider({ children }: { children: ReactNode }) {
-  const [path, setPath] = useState(window.location.pathname);
+  const [path, setPath] = useState(getAppPath);
 
   useEffect(() => {
-    const handlePopState = () => setPath(window.location.pathname);
+    const handlePopState = () => setPath(getAppPath());
     window.addEventListener("popstate", handlePopState);
     return () => window.removeEventListener("popstate", handlePopState);
   }, []);
@@ -29,9 +45,10 @@ export function RouterProvider({ children }: { children: ReactNode }) {
     () => ({
       path,
       navigate(to, replace = false) {
-        if (replace) window.history.replaceState(null, "", to);
-        else window.history.pushState(null, "", to);
-        setPath(window.location.pathname);
+        const browserPath = getBrowserPath(to);
+        if (replace) window.history.replaceState(null, "", browserPath);
+        else window.history.pushState(null, "", browserPath);
+        setPath(getAppPath());
         window.scrollTo({ top: 0, behavior: "auto" });
       },
     }),
@@ -72,7 +89,7 @@ export function Link({ to, replace = false, onClick, target, ...props }: LinkPro
     navigate(to, replace);
   }
 
-  return <a {...props} href={to} target={target} onClick={handleClick} />;
+  return <a {...props} href={getBrowserPath(to)} target={target} onClick={handleClick} />;
 }
 
 export function Redirect({ to }: { to: string }) {
